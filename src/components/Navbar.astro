@@ -5,15 +5,23 @@
       <img src="/img/logo.JPG" alt="" class="h-11 w-11 rounded-full object-cover" />
       <span class="serif text-2xl font-semibold tracking-[.08em] text-[#1d3158]">LA MIGA</span>
     </a>
-    <button id="menu-toggle" class="rounded-md border border-[#315b9a]/40 px-3 py-2 md:hidden" aria-label="Abrir menú" aria-expanded="false">☰</button>
-    <div id="nav-links" class="absolute left-0 top-[68px] hidden w-full border-b border-[#315b9a]/20 bg-[#f2f6fc] p-5 md:static md:flex md:w-auto md:items-center md:gap-6 md:border-0 md:bg-transparent md:p-0">
+    <button id="menu-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-xl border border-[#315b9a]/30 text-[#1d3158] transition hover:bg-[#dce8f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315b9a] md:hidden" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">
+      <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <div id="nav-links" class="absolute left-0 top-[68px] hidden w-full border-b border-[#315b9a]/20 bg-[#f2f6fc] p-4 shadow-lg md:static md:flex md:w-auto md:items-center md:gap-6 md:border-0 md:bg-transparent md:p-0 md:shadow-none">
       <a href="#galeria">Galería</a><a href="#menu">Selección</a><a href="#nosotros">Nosotros</a><a href="#delivery">Delivery</a>
       <a class="button !px-4 !py-2 !text-xs" href="#delivery">Pedir <span id="cart-count" aria-live="polite">0</span></a>
     </div>
   </nav>
 </header>
 <style>
-  #nav-links a:not(.button){font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:#31425f}
-  #nav-links a:not(.button):hover{color:#244d86}
-  @media(min-width:768px){#nav-links{display:flex!important}}
+  #nav-links a:not(.button){display:flex;align-items:center;min-height:44px;padding:.65rem .75rem;border-radius:.6rem;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:#31425f;transition:background-color .2s,color .2s}
+  #nav-links a:not(.button):hover{color:#244d86;background:#e5eef9}
+  .menu-icon{display:grid;gap:5px;width:20px}
+  .menu-icon span{height:2px;width:20px;border-radius:2px;background:currentColor;transition:transform .2s,opacity .2s}
+  #menu-toggle[aria-expanded="true"] .menu-icon span:first-child{transform:translateY(7px) rotate(45deg)}
+  #menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(2){opacity:0}
+  #menu-toggle[aria-expanded="true"] .menu-icon span:last-child{transform:translateY(-7px) rotate(-45deg)}
+  @media(max-width:767px){#nav-links:not(.hidden){display:flex;flex-direction:column;gap:.2rem}#nav-links .button{min-height:44px;margin-top:.35rem}}
+  @media(min-width:768px){#nav-links{display:flex!important}#nav-links a:not(.button){padding:.5rem .3rem}}
 </style>
