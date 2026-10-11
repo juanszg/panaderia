@@ -5,11 +5,11 @@
       <img src="/img/logo.JPG" alt="" class="h-11 w-11 rounded-full object-cover" />
       <span class="serif text-2xl font-semibold tracking-[.08em] text-[#1d3158]">LA MIGA</span>
     </a>
-    <button id="menu-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-xl border border-[#315b9a]/30 text-[#1d3158] transition hover:bg-[#dce8f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315b9a] md:hidden" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">
+    <button id="menu-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-xl border border-[#315b9a]/30 text-[#1d3158] transition hover:bg-[#dce8f8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315b9a] lg:hidden" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">
       <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
-    <div id="nav-links" class="absolute left-0 top-[68px] hidden w-full border-b border-[#315b9a]/20 bg-[#f2f6fc] p-4 shadow-lg md:static md:flex md:w-auto md:items-center md:gap-6 md:border-0 md:bg-transparent md:p-0 md:shadow-none">
-      <a href="#galeria">Galería</a><a href="#menu">Selección</a><a href="#nosotros">Nosotros</a><a href="#delivery">Delivery</a>
+    <div id="nav-links" class="absolute left-0 top-[68px] hidden w-full border-b border-[#315b9a]/20 bg-[#f2f6fc] p-4 shadow-lg lg:static lg:flex lg:w-auto lg:items-center lg:gap-4 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
+      <a href="#galeria">Galería</a><a href="#menu">Selección</a><a href="#nosotros">Nosotros</a><a href="#delivery">Delivery</a><a class="special-nav" href="#pedido">Arma tu pedido</a>
       <a class="button !px-4 !py-2 !text-xs" href="#delivery">Pedir <span id="cart-count" aria-live="polite">0</span></a>
     </div>
   </nav>
@@ -22,6 +22,10 @@
   #menu-toggle[aria-expanded="true"] .menu-icon span:first-child{transform:translateY(7px) rotate(45deg)}
   #menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(2){opacity:0}
   #menu-toggle[aria-expanded="true"] .menu-icon span:last-child{transform:translateY(-7px) rotate(-45deg)}
-  @media(max-width:767px){#nav-links:not(.hidden){display:flex;flex-direction:column;gap:.2rem}#nav-links .button{min-height:44px;margin-top:.35rem}}
-  @media(min-width:768px){#nav-links{display:flex!important}#nav-links a:not(.button){padding:.5rem .3rem}}
+  #nav-links:not(.hidden){animation:menu-drop .24s cubic-bezier(.2,.8,.2,1) both}
+  #nav-links a.special-nav{min-height:44px;padding:.7rem 1rem;border:1px solid #e99a54;border-radius:9999px;background:#fff3e4;color:#9b4d19;font-weight:800}
+  #nav-links a.special-nav:hover{color:#71360f;background:#ffe2c1}
+  @keyframes menu-drop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:1023px){#nav-links:not(.hidden){display:flex;flex-direction:column;gap:.2rem}#nav-links .button{min-height:44px;margin-top:.35rem}}
+  @media(min-width:1024px){#nav-links{display:flex!important}#nav-links a:not(.button){padding:.5rem .25rem}}
 </style>

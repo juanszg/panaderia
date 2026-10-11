@@ -144,6 +144,58 @@ import { featured, gallery } from "../data/catalog.js";
       </div>
     </section>
     <Delivery />
+    <section id="pedido" class="relative isolate overflow-hidden bg-[#f0a65e] px-5 py-16 sm:py-20">
+      <div class="pointer-events-none absolute -right-24 -top-28 -z-10 h-72 w-72 rounded-full border-[36px] border-white/20 sm:h-96 sm:w-96"></div>
+      <div class="shell reveal grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+        <div class="max-w-2xl">
+          <p class="text-xs font-extrabold uppercase tracking-[.22em] text-[#71360f]">Hecho especialmente para ti</p>
+          <h2 class="serif mt-3 text-5xl font-semibold leading-[.95] text-[#172b51] sm:text-6xl">Arma tu pedido</h2>
+          <p class="mt-4 max-w-xl text-sm leading-7 text-[#54351f] sm:text-base">¿Tienes una idea, una celebración o antojo de algo distinto? Cuéntanos cantidades, ingredientes y cómo te gustaría prepararlo. Lo hacemos realidad contigo.</p>
+        </div>
+        <button id="special-order-open" type="button" class="special-order-cta inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[#172b51] px-9 py-5 text-sm font-bold text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#244d86] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/70">
+          Diseñar mi pedido <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </section>
+    <dialog id="special-order-dialog" aria-labelledby="special-order-title" aria-describedby="special-order-description" class="special-dialog w-[min(92vw,680px)] max-h-[90vh] overflow-y-auto rounded-[1.75rem] border-0 bg-[#f2f6fc] p-0 text-[#31425f] shadow-2xl">
+      <div class="p-6 sm:p-8">
+        <div class="mb-6 flex items-start justify-between gap-5">
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#9b4d19]">Pedido especial</p>
+            <h2 id="special-order-title" class="serif mt-1 text-4xl font-semibold leading-none text-[#1d3158]">Cuéntanos tu idea</h2>
+            <p id="special-order-description" class="mt-2 text-sm leading-6 text-[#5b6b85]">Te contactaremos por WhatsApp para confirmar los detalles.</p>
+          </div>
+          <button id="special-order-close" type="button" class="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#315b9a]/20 text-2xl leading-none text-[#1d3158] transition hover:rotate-90 hover:bg-[#dce8f8]" aria-label="Cerrar formulario">×</button>
+        </div>
+        <form id="special-order-form" class="grid gap-4 sm:grid-cols-2">
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f]">Tu nombre
+            <input required name="name" autocomplete="name" autofocus class="special-input" placeholder="¿Cómo te llamas?" />
+          </label>
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f]">¿Qué te gustaría?
+            <input required name="product" class="special-input" placeholder="Ej. pastel, pan, galletas..." />
+          </label>
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f]">Cantidad
+            <input required type="number" name="quantity" min="1" max="1000" inputmode="numeric" class="special-input" placeholder="Piezas o porciones" />
+          </label>
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f]">¿Para cuándo?
+            <input type="date" name="date" class="special-input" />
+          </label>
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f] sm:col-span-2">Ingredientes o preferencias
+            <textarea required name="ingredients" rows="2" class="special-input resize-y" placeholder="Ingredientes favoritos, alergias o restricciones"></textarea>
+          </label>
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f] sm:col-span-2">Elaboración especial
+            <textarea required name="preparation" rows="3" class="special-input resize-y" placeholder="Cuéntanos el sabor, acabado, decoración o preparación que imaginas"></textarea>
+          </label>
+          <label class="text-xs font-bold uppercase tracking-wide text-[#31425f] sm:col-span-2">Detalles extra <span class="font-normal normal-case tracking-normal text-[#6b7890]">(opcional)</span>
+            <textarea name="notes" rows="2" class="special-input resize-y" placeholder="Colores, ocasión, presupuesto aproximado u otro detalle"></textarea>
+          </label>
+          <div class="mt-1 flex flex-col-reverse gap-3 sm:col-span-2 sm:flex-row sm:justify-end">
+            <button id="special-order-cancel" type="button" class="rounded-full border border-[#315b9a]/30 px-6 py-3 text-sm font-semibold text-[#31425f] transition hover:bg-[#e4edf9]">Ahora no</button>
+            <button type="submit" class="button justify-center">Enviar idea por WhatsApp ↗</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
   </main>
   <!-- Update this WhatsApp number and the one in Scripts.astro before production. -->
   <a
@@ -174,11 +226,46 @@ import { featured, gallery } from "../data/catalog.js";
   <Scripts />
 </BaseLayout>
 <style>
+  .special-dialog::backdrop {
+    background: rgb(12 27 54 / 72%);
+    backdrop-filter: blur(5px);
+  }
+  .special-dialog[open] {
+    animation: special-dialog-in 0.28s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .special-input {
+    display: block;
+    width: 100%;
+    margin-top: .4rem;
+    border: 1px solid rgb(49 91 154 / 28%);
+    border-radius: .8rem;
+    background: white;
+    padding: .8rem .9rem;
+    color: #1d3158;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-transform: none;
+    letter-spacing: normal;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, background-color .2s;
+  }
+  .special-input::placeholder { color: #8290a6; }
+  .special-input:focus {
+    border-color: #315b9a;
+    background: #fbfdff;
+    box-shadow: 0 0 0 3px rgb(49 91 154 / 14%);
+  }
+  @keyframes special-dialog-in {
+    from { opacity: 0; transform: translateY(18px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
   .gallery img {
-    transition: transform 0.55s;
+    transition: transform 0.65s cubic-bezier(.2,.8,.2,1), filter .65s;
   }
   .gallery:hover img {
-    transform: scale(1.07);
+    transform: scale(1.09);
+    filter: saturate(1.12);
   }
   @media (min-width: 768px) {
     .gallery {
